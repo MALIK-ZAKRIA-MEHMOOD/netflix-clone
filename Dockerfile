@@ -1,18 +1,14 @@
-FROM centos:stream9
+# Use lightweight Apache image
+FROM httpd:alpine
 
-WORKDIR /app
+# Set working directory
+WORKDIR /usr/local/apache2/htdocs/
 
-# Update packages and install Apache
-RUN dnf -y update && \
-    dnf -y install httpd && \
-    dnf clean all
+# Copy your website files
+COPY ./html/ ./
 
-# Copy website files
-COPY ./html/ /var/www/html/
-
-# Expose port 80
+# Expose port 80 (already default in httpd)
 EXPOSE 80
 
-# Start Apache in foreground
-CMD ["/usr/sbin/httpd", "-D", "FOREGROUND"]
+# Command is already set in httpd:alpine (runs httpd in foreground)
 
