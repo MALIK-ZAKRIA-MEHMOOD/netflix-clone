@@ -1,17 +1,18 @@
-FROM centos:8
+FROM centos/stream:9
 
-# Update packages
-RUN yum update -y
+WORKDIR /app
 
-# Install Apache (httpd)
-RUN yum install -y httpd
+# Update packages and install Apache
+RUN dnf -y update && \
+    dnf -y install httpd && \
+    dnf clean all
 
 # Copy website files
-COPY . /var/www/html/
+COPY ./html/ /var/www/html/
 
-# Expose port
-EXPOSE 4000
+# Expose port 80
+EXPOSE 80
 
-# Start Apache in the foreground
+# Start Apache in foreground
 CMD ["/usr/sbin/httpd", "-D", "FOREGROUND"]
 
