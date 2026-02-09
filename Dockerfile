@@ -1,4 +1,4 @@
-FROM centos/stream:9
+FROM centos:stream9
 
 WORKDIR /app
 
